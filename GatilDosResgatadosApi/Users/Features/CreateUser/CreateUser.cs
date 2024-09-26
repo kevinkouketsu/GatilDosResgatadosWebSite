@@ -81,5 +81,14 @@ public class CreateUser(
          
             await emailGateway.SendRegisterConfirmation(user.Email, url);
         }
+        else
+        {
+            foreach (var error in result.Errors)
+            {
+                AddError(error.Description);
+            }
+
+            await SendAsync(new ProblemDetails(ValidationFailures));
+        }
     }
 }
