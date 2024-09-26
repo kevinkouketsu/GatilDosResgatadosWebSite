@@ -3,9 +3,7 @@ using GatilDosResgatadosApi.Infrastructure.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using GatilDosResgatadosApi.Infrastructure.Options;
-using System.Text;
 using GatilDosResgatadosApi.Infrastructure.Data;
-using FastEndpoints.Security;
 using GatilDosResgatadosApi.Core.Abstractions;
 using GatilDosResgatadosApi.Core.Services;
 
@@ -16,8 +14,9 @@ public static class ServiceCollectionExtension
     public static IServiceCollection ConfigureAuthentication(this IServiceCollection services)
     {
         services.AddIdentity<ApplicationUser, IdentityRole>()
-            .AddEntityFrameworkStores<ApplicationIdentityDbContext>()
-            .AddDefaultTokenProviders();
+        .AddEntityFrameworkStores<ApplicationIdentityDbContext>()
+        .AddErrorDescriber<IdentityPortugueseMessages>()
+        .AddDefaultTokenProviders();
 
         return services;
     }

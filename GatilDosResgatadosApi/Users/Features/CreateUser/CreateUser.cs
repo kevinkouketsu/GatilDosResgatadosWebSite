@@ -77,7 +77,7 @@ public class CreateUser(
         if (result.Succeeded)
         {
             var code = await userManager.GenerateEmailConfirmationTokenAsync(user);
-            var url = QueryHelpers.AddQueryString(generalOptions.Value.GetUrlTo("/api/confirm-user"), new Dictionary<string, string?>() { { "email", req.Email }, { "token", code } });
+            var url = QueryHelpers.AddQueryString(generalOptions.Value.GetUrlTo("/api/confirm-user"), new Dictionary<string, string?>() { { "id", user.Id }, { "token", code } });
          
             await emailGateway.SendRegisterConfirmation(user.Email, url);
         }
