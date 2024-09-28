@@ -52,8 +52,7 @@ public class CreateUserRequestValidator : Validator<CreateUserRequest>
 public class CreateUser(
     SignInManager<ApplicationUser> signInManager,
     UserManager<ApplicationUser> userManager,
-    IEmailGateway emailGateway,
-    IOptions<GeneralOptions> generalOptions
+    IEmailGateway emailGateway
 ) : Endpoint<CreateUserRequest>
 {
     public override void Configure()
@@ -77,7 +76,7 @@ public class CreateUser(
         if (result.Succeeded)
         {
             var code = await userManager.GenerateEmailConfirmationTokenAsync(user);
-            var url = QueryHelpers.AddQueryString(generalOptions.Value.GetUrlTo("/api/confirm-user"), new Dictionary<string, string?>() { { "id", user.Id }, { "token", code } });
+            var url = QueryHelpers.AddQueryString(BaseURL, new Dictionary<string, string?>() { { "id", user.Id }, { "token", code } });
          
             await emailGateway.SendRegisterConfirmation(user.Email, url);
         }
