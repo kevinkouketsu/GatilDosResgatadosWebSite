@@ -6,18 +6,24 @@ using GatilDosResgatadosApi.Infrastructure.Options;
 using GatilDosResgatadosApi.Infrastructure.Data;
 using GatilDosResgatadosApi.Core.Abstractions;
 using GatilDosResgatadosApi.Core.Services;
+using FastEndpoints.Security;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace GatilDosResgatadosApi.Infrastructure;
 
 public static class ServiceCollectionExtension
 {
-    public static IServiceCollection ConfigureAuthentication(this IServiceCollection services)
+    public static IServiceCollection ConfigureAuthentication(this IServiceCollection services, IConfiguration configuration)
     {
-        services.AddIdentity<ApplicationUser, IdentityRole>()
-        .AddEntityFrameworkStores<ApplicationIdentityDbContext>()
-        .AddErrorDescriber<IdentityPortugueseMessages>()
-        .AddDefaultTokenProviders();
+        services.AddIdentity<ApplicationUser, IdentityRole>(x => x.SignIn.RequireConfirmedAccount = true)
+            .AddEntityFrameworkStores<ApplicationIdentityDbContext>()
+            .AddErrorDescriber<IdentityPortugueseMessages>()
+            .AddDefaultTokenProviders();
 
+        var secret = configuration.GetSection("TokenConfiguration").Get<JwtTokenOptions>()!.Secret;
+        services.AddAuthenticationJwtBearer(s => s.SigningKey = secret);
+
+        services.AddAuthentication(o => o.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme);
         return services;
     }
 

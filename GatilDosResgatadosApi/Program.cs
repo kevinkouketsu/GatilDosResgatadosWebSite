@@ -3,7 +3,7 @@ using Serilog.Events;
 using Serilog;
 using GatilDosResgatadosApi.Infrastructure;
 using FastEndpoints.Swagger;
-using FastEndpoints.Security;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 var builder = WebApplication.CreateBuilder();
 Log.Logger = new LoggerConfiguration()
@@ -15,18 +15,19 @@ Log.Logger = new LoggerConfiguration()
     .WriteTo.File("logs/log.txt", rollingInterval: RollingInterval.Day).CreateLogger();
 
 builder.Services
-    .ConfigureAuthentication()
     .ConfigureOptions(builder.Configuration)
     .ConfigureEmailSender(builder.Configuration)
     .AddDatabase(builder.Configuration)
+    .ConfigureAuthentication(builder.Configuration)
     .AddAuthorization()
     .AddFastEndpoints()
     .SwaggerDocument();
 
 var app = builder.Build();
-app.UseFastEndpoints()
+app
    .UseSwaggerGen()
    .UseAuthentication()
-   .UseAuthorization();
+   .UseAuthorization()
+   .UseFastEndpoints();
 
 app.Run();

@@ -3,17 +3,20 @@ using System;
 using GatilDosResgatadosApi.Infrastructure.Identity.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-namespace GatilDosResgatadosApi.GatilDosResgatadosApi.Infrastructure.Identity.Data
+namespace GatilDosResgatadosApi.GatilDosResgatadosApi.GatilDosResgatadosApi.Infrastructure.Data
 {
     [DbContext(typeof(ApplicationIdentityDbContext))]
-    partial class ApplicationIdentityDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240928145357_AddedRefreshTokenColumns")]
+    partial class AddedRefreshTokenColumns
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
