@@ -31,12 +31,7 @@ public class JwtTokenService : RefreshTokenService<TokenRequest, TokenResponse>
 
     public override async Task PersistTokenAsync(TokenResponse response)
     {
-        var user = await _userManager.FindByIdAsync(response.UserId);
-        if (user is null) 
-        {
-            throw new InvalidOperationException("Invalid state, user should be always found");
-        }
-
+        var user = await _userManager.FindByIdAsync(response.UserId) ?? throw new InvalidOperationException("Invalid state, user should be always found");
         user.RefreshToken = response.RefreshToken;
         user.RefreshTokenExpiryTime = response.RefreshExpiry;
 
@@ -48,12 +43,7 @@ public class JwtTokenService : RefreshTokenService<TokenRequest, TokenResponse>
 
     public async override Task RefreshRequestValidationAsync(TokenRequest req)
     {
-        var user = await _userManager.FindByIdAsync(req.UserId);
-        if (user is null)
-        {
-            throw new InvalidOperationException("Invalid state, user should be always found");
-        }
-
+        var user = await _userManager.FindByIdAsync(req.UserId) ?? throw new InvalidOperationException("Invalid state, user should be always found");
         if (user.RefreshToken != req.RefreshToken)
             AddError("The refresh token is not valid");
     }

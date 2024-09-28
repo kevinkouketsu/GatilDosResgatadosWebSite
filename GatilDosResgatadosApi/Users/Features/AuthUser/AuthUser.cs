@@ -21,7 +21,7 @@ public class AuthUser(UserManager<ApplicationUser> userManager) : Endpoint<AuthU
         var user = await userManager.FindByNameAsync(req.Email);
         if (user is null)
         {
-            await SendNotFoundAsync();
+            await SendNotFoundAsync(ct);
             return;
         }
 

@@ -27,7 +27,7 @@ public static class ServiceCollectionExtension
         return services;
     }
 
-    public static IServiceCollection ConfigureEmailSender(this IServiceCollection services, IConfiguration _configuration)
+    public static IServiceCollection ConfigureEmailSender(this IServiceCollection services, IConfiguration _1)
     {
         services.AddTransient<IEmailGateway, NoopEmailGateway>();
 
