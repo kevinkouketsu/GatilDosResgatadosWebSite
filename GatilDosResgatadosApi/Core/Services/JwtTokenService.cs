@@ -50,6 +50,9 @@ public class JwtTokenService : RefreshTokenService<TokenRequest, TokenResponse>
 
     public override Task SetRenewalPrivilegesAsync(TokenRequest request, UserPrivileges privileges)
     {
-        throw new NotImplementedException();
+        privileges.Claims.Add(new("UserID", request.UserId));
+
+        //TODO permissions will be set here
+        return Task.CompletedTask;
     }
 }
