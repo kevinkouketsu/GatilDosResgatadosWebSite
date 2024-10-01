@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
-namespace GatilDosResgatadosApi.Users.Features.ConfirmUser;
+namespace GatilDosResgatadosApi.Areas.Users.Features.ConfirmUser;
 
 public record ConfirmUserRequest([FromQuery] string UserId, [FromQuery] string Token);
 
@@ -52,7 +52,7 @@ public class ConfirmUser(UserManager<ApplicationUser> userManager, ILogger<Confi
             logger.LogError("Could not confirm account {Email}. Error: {Error}", user.Email, error);
             return TypedResults.Problem("Não foi possível confirmar a conta.");
         }
-        
+
         return TypedResults.Ok();
     }
 }

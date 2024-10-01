@@ -3,7 +3,6 @@ using Serilog.Events;
 using Serilog;
 using GatilDosResgatadosApi.Infrastructure;
 using FastEndpoints.Swagger;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 var builder = WebApplication.CreateBuilder();
 Log.Logger = new LoggerConfiguration()
@@ -21,7 +20,10 @@ builder.Services
     .ConfigureAuthentication(builder.Configuration)
     .AddAuthorization()
     .AddFastEndpoints()
-    .SwaggerDocument();
+    .SwaggerDocument(x =>
+    {
+        x.AutoTagPathSegmentIndex = 2;
+    });
 
 var app = builder.Build();
 app

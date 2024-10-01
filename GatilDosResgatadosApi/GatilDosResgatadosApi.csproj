@@ -24,7 +24,8 @@
 
   <ItemGroup>
     <Folder Include="Core\Entities\" />
-    <Folder Include="Users\Entities\" />
+    <Folder Include="Areas\Users\Entities\" />
+    <Folder Include="GatilDosResgatadosApi\Infrastructure\" />
   </ItemGroup>
 
 </Project>

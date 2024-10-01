@@ -1,5 +1,4 @@
-﻿using GatilDosResgatadosApi.Infrastructure.Identity.Data;
-using GatilDosResgatadosApi.Infrastructure.Identity;
+﻿using GatilDosResgatadosApi.Infrastructure.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using GatilDosResgatadosApi.Infrastructure.Options;
@@ -16,7 +15,7 @@ public static class ServiceCollectionExtension
     public static IServiceCollection ConfigureAuthentication(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddIdentity<ApplicationUser, IdentityRole>(x => x.SignIn.RequireConfirmedAccount = true)
-            .AddEntityFrameworkStores<ApplicationIdentityDbContext>()
+            .AddEntityFrameworkStores<ApplicationDbContext>()
             .AddErrorDescriber<IdentityPortugueseMessages>()
             .AddDefaultTokenProviders();
 
@@ -44,9 +43,6 @@ public static class ServiceCollectionExtension
 
     public static IServiceCollection AddDatabase(this IServiceCollection services, IConfiguration configuration)
     {
-        services.AddDbContext<ApplicationIdentityDbContext>(c =>
-            c.UseNpgsql(configuration.GetConnectionString("DefaultConnection")));
-
         services.AddDbContext<ApplicationDbContext>(c =>
             c.UseNpgsql(configuration.GetConnectionString("DefaultConnection")));
 

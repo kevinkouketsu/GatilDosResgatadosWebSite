@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Options;
 
-namespace GatilDosResgatadosApi.Users.Features.CreateUser;
+namespace GatilDosResgatadosApi.Areas.Users.Features.CreateUser;
 
 public record CreateUserRequest
 {
@@ -77,7 +77,7 @@ public class CreateUser(
         {
             var code = await userManager.GenerateEmailConfirmationTokenAsync(user);
             var url = QueryHelpers.AddQueryString(BaseURL, new Dictionary<string, string?>() { { "id", user.Id }, { "token", code } });
-         
+
             await emailGateway.SendRegisterConfirmation(user.Email, url);
         }
         else

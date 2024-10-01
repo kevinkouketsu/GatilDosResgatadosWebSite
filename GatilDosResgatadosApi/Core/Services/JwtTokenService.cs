@@ -22,7 +22,7 @@ public class JwtTokenService : RefreshTokenService<TokenRequest, TokenResponse>
             o.AccessTokenValidity = TimeSpan.FromMinutes(5);
             o.RefreshTokenValidity = TimeSpan.FromHours(4);
 
-            o.Endpoint("/api/refresh-token", ep =>
+            o.Endpoint("/api/user/refresh-token", ep =>
             {
                 ep.Summary(s => s.Summary = "this is the refresh token endpoint");
             });

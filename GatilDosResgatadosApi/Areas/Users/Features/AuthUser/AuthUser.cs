@@ -4,7 +4,7 @@ using GatilDosResgatadosApi.Core.Services;
 using GatilDosResgatadosApi.Infrastructure.Identity;
 using Microsoft.AspNetCore.Identity;
 
-namespace GatilDosResgatadosApi.Users.Features.AuthUser;
+namespace GatilDosResgatadosApi.Areas.Users.Features.AuthUser;
 
 public record AuthUserRequest(string Email, string Password);
 
@@ -22,6 +22,13 @@ public class AuthUser(UserManager<ApplicationUser> userManager) : Endpoint<AuthU
         if (user is null)
         {
             await SendNotFoundAsync(ct);
+            return;
+        }
+
+        bool isEmailConfirmed = await userManager.IsEmailConfirmedAsync(user);
+        if (!isEmailConfirmed)
+        {
+            await SendForbiddenAsync(ct);
             return;
         }
 
