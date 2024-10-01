@@ -16,7 +16,7 @@ public class DeletePet(ApplicationDbContext dbContext, ILogger<DeletePet> logger
 
     public async override Task<Results<NoContent, NotFound, ProblemHttpResult>> ExecuteAsync(DeletePetRequest req, CancellationToken ct)
     {
-        var pet = await dbContext.Pets.FindAsync(req.Id);
+        var pet = await dbContext.Pets.FindAsync([req.Id], cancellationToken: ct);
         if (pet is null)
         {
             return TypedResults.NotFound();
