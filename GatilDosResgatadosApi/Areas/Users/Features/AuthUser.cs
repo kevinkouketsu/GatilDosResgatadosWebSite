@@ -4,7 +4,7 @@ using GatilDosResgatadosApi.Core.Services;
 using GatilDosResgatadosApi.Infrastructure.Identity;
 using Microsoft.AspNetCore.Identity;
 
-namespace GatilDosResgatadosApi.Areas.Users.Features.AuthUser;
+namespace GatilDosResgatadosApi.Areas.Users.Features;
 
 public record AuthUserRequest(string Email, string Password);
 

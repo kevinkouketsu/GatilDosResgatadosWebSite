@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 
-namespace GatilDosResgatadosApi.Areas.Pets;
+namespace GatilDosResgatadosApi.Areas.Pets.Features;
 
 public record UpdatePetRequest
 {

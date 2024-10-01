@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
-namespace GatilDosResgatadosApi.Areas.Users.Features.ConfirmUser;
+namespace GatilDosResgatadosApi.Areas.Users.Features;
 
 public record ConfirmUserRequest([FromQuery] string UserId, [FromQuery] string Token);
 

@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Options;
 
-namespace GatilDosResgatadosApi.Areas.Users.Features.CreateUser;
+namespace GatilDosResgatadosApi.Areas.Users.Features;
 
 public record CreateUserRequest
 {

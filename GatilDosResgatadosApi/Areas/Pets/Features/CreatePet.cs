@@ -6,7 +6,7 @@ using GatilDosResgatadosApi.Infrastructure;
 using GatilDosResgatadosApi.Infrastructure.Data;
 using Microsoft.AspNetCore.Http.HttpResults;
 
-namespace GatilDosResgatadosApi.Areas.Pets.CreatePet;
+namespace GatilDosResgatadosApi.Areas.Pets.Features;
 
 public record CreatePetRequest : SignedInRequest
 {
@@ -50,7 +50,7 @@ public class CreatePet(ApplicationDbContext dbContext, ILogger<CreatePet> logger
             await req.Avatar.CopyToAsync(memoryStream, ct);
             avatar = memoryStream.ToArray();
         }
-        
+
         Pet pet = new()
         {
             Id = Guid.NewGuid().ToString(),
