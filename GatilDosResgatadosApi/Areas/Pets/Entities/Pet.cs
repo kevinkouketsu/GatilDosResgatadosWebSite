@@ -1,6 +1,5 @@
 ﻿using GatilDosResgatadosApi.Areas.Common;
 using GatilDosResgatadosApi.Infrastructure.Identity;
-using Microsoft.AspNetCore.Identity;
 
 namespace GatilDosResgatadosApi.Areas.Pets.Entities;
 
