@@ -3,6 +3,7 @@ using Serilog.Events;
 using Serilog;
 using GatilDosResgatadosApi.Infrastructure;
 using FastEndpoints.Swagger;
+using Microsoft.AspNetCore.Http.Features;
 
 var builder = WebApplication.CreateBuilder();
 Log.Logger = new LoggerConfiguration()
@@ -19,6 +20,7 @@ builder.Services
     .AddDatabase(builder.Configuration)
     .ConfigureAuthentication(builder.Configuration)
     .AddAuthorization()
+    .Configure<FormOptions>(options => options.MultipartBodyLengthLimit = 10 * 1024 * 1024)
     .AddFastEndpoints()
     .SwaggerDocument(x =>
     {

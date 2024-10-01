@@ -25,6 +25,7 @@ public class CreatePetRequestValidator : Validator<CreatePetRequest>
             .NotEmpty().WithMessage("O nome do pet não pode estar vazio");
 
         RuleFor(x => x.Avatar)
+            .Must(x => x.Length < Pet.MaxAvatarSize).WithMessage("O tamanho máximo para o avatar é de 10mb")
             .Must(x => x.IsImage()).WithMessage("O avatar deve ser uma imagem válida");
 
         RuleFor(x => x.Gender)
@@ -42,6 +43,14 @@ public class CreatePet(ApplicationDbContext dbContext, ILogger<CreatePet> logger
 
     public async override Task<Results<Created, ProblemHttpResult>> ExecuteAsync(CreatePetRequest req, CancellationToken ct)
     {
+        byte[]? avatar = null;
+        if (req.Avatar.Length > 0)
+        {
+            using var memoryStream = new MemoryStream();
+            await req.Avatar.CopyToAsync(memoryStream, ct);
+            avatar = memoryStream.ToArray();
+        }
+        
         Pet pet = new()
         {
             Id = Guid.NewGuid().ToString(),
@@ -49,6 +58,7 @@ public class CreatePet(ApplicationDbContext dbContext, ILogger<CreatePet> logger
             Description = req.Description,
             Gender = req.Gender,
             Weight = req.Weight,
+            Avatar = avatar,
             CreatedById = req.UserId
         };
 

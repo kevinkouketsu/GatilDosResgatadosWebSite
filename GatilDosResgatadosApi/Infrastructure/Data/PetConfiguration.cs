@@ -13,7 +13,8 @@ public class PetConfiguration : IEntityTypeConfiguration<Pet>
         builder.Property(x => x.Description).HasMaxLength(256);
         builder.Property(x => x.Weight);
         builder.Property(x => x.Gender);
-        
+        builder.Property(x => x.Avatar).HasMaxLength(Pet.MaxAvatarSize);
+
         builder
             .HasOne(x => x.CreatedBy)
             .WithMany(x => x.Pets)

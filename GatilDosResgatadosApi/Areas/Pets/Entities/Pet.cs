@@ -6,12 +6,14 @@ namespace GatilDosResgatadosApi.Areas.Pets.Entities;
 
 public class Pet : AuditableEntity
 {
+    public static int MaxAvatarSize = 10 * 1024 * 1024;
     public string Id { get; set; } = default!;
     public required string Name { get; set; }
     public string Description { get; set; } = default!;
     public double? Weight { get; set; }
     public Gender? Gender { get; set; }
     public string? CreatedById { get; set; }
+    public byte[]? Avatar { get; set; }
     public virtual ApplicationUser CreatedBy { get; set; } = default!;
     public override string ToString()
     {
