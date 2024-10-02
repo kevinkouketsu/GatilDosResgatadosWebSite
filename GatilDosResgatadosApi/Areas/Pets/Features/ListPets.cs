@@ -35,6 +35,7 @@ public class ListPets(ApplicationDbContext dbContext) : Endpoint<ListPetsRequest
             .WhereIf(req.Gender.HasValue, x => x.Gender == req.Gender!.Value)
             .WhereIf(req.MinimumWeight.HasValue, x => x.Weight >= req.MinimumWeight!.Value)
             .WhereIf(req.MaximumWeight.HasValue, x => x.Weight <= req.MaximumWeight!.Value)
+            .OrderBy(x => x.CreatedAt)
             .ToPaginatedListAsync(req, ct);
 
         return TypedResults.Ok(results.Map(PetResponse.Map));
