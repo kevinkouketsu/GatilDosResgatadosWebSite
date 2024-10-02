@@ -3,10 +3,9 @@ using GatilDosResgatadosApi.Infrastructure.Identity;
 
 namespace GatilDosResgatadosApi.Areas.Pets.Entities;
 
-public class Pet : AuditableEntity
+public class Pet : IdentifiableAuditableEntity
 {
     public static int MaxAvatarSize = 10 * 1024 * 1024;
-    public string Id { get; set; } = default!;
     public required string Name { get; set; }
     public string Description { get; set; } = default!;
     public double? Weight { get; set; }

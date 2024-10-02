@@ -6,7 +6,8 @@ namespace GatilDosResgatadosApi.Infrastructure;
 
 public static class LinqExtensions
 {
-    public static async Task<PaginatedList<T>> ToPaginatedListAsync<T>(this IQueryable<T> source, IPageable pageable, CancellationToken cancellationToken = default)
+    public static async Task<PaginatedList<T>> ToPaginatedListAsync<T>(this IQueryable<T> source, IPageable pageable, CancellationToken cancellationToken = default) 
+        where T: IdentifiableAuditableEntity
     {
         int currentPage = pageable.PageNumber;
         int pageSize = pageable.PageSize;
@@ -17,6 +18,7 @@ public static class LinqExtensions
         var items = await source
             .Skip((currentPage - 1) * pageSize)
             .Take(pageSize)
+            .OrderBy(x => x.Id)
             .ToListAsync(cancellationToken);
 
         return new()
