@@ -7,12 +7,12 @@ using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
-namespace GatilDosResgatadosApi.Areas.Pets.Features;
+namespace GatilDosResgatadosApi.Areas.Pets.Features.Media;
 
 public record UploadMediaPetRequest
 {
     public required string PetId { get; set; }
-    
+
     [FromForm]
     public IEnumerable<string>? Descriptions { get; set; }
 }
@@ -43,7 +43,7 @@ public class UploadMediaPet(ApplicationDbContext dbContext, ILogger<UploadMediaP
             return TypedResults.BadRequest();
         }
 
-        var pet = await dbContext.Pets.Include(x => x.Medias).FirstOrDefaultAsync(x => x.Id == req.PetId, ct);
+        var pet = await dbContext.Pets.FirstOrDefaultAsync(x => x.Id == req.PetId, ct);
         if (pet is null)
         {
             return TypedResults.NotFound();
@@ -61,7 +61,7 @@ public class UploadMediaPet(ApplicationDbContext dbContext, ILogger<UploadMediaP
                     Description = desc
                 };
 
-                pet.Medias!.Add(petMedia);
+                pet.Medias.Add(petMedia);
             }
 
             await dbContext.SaveChangesAsync(ct);
