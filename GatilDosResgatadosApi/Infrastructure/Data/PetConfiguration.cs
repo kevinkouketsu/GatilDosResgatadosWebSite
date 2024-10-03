@@ -29,7 +29,7 @@ public class PetConfiguration : IEntityTypeConfiguration<Pet>
             a.WithOwner().HasForeignKey("OwnerId");
 
             a.Property(x => x.Description).HasMaxLength(4096);
-            a.Property(x => x.Data).HasMaxLength(PetMedia.MaxMediaSize);
+            a.Property(x => x.Data).HasMaxLength(PetMedia.MaxMediaSize).IsRequired();
         });
     }
 }
