@@ -7,16 +7,16 @@ using Microsoft.EntityFrameworkCore;
 
 namespace GatilDosResgatadosApi.Areas.Pets.Features;
 
-public record ViewPetRequest([FromRoute] string Id);
+public record GetPetRequest([FromRoute] string Id);
 
-public class ViewPet(ApplicationDbContext dbContext) : Endpoint<ViewPetRequest, Results<Ok<PetResponse>, NotFound>>
+public class GetPet(ApplicationDbContext dbContext) : Endpoint<GetPetRequest, Results<Ok<PetResponse>, NotFound>>
 {
     public override void Configure()
     {
         Get("/api/pets/{id}");
     }
 
-    public async override Task<Results<Ok<PetResponse>, NotFound>> ExecuteAsync(ViewPetRequest req, CancellationToken ct)
+    public async override Task<Results<Ok<PetResponse>, NotFound>> ExecuteAsync(GetPetRequest req, CancellationToken ct)
     {
         var pet = await dbContext.Pets.FirstOrDefaultAsync(x => x.Id == req.Id, ct);
         if (pet is null)
