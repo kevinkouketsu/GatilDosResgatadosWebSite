@@ -11,7 +11,7 @@ public class DeleteMediaPet(ApplicationDbContext dbContext, ILogger<DeleteMediaP
 {
     public override void Configure()
     {
-        Delete("/api/pet/{@pet}/medias/{@mediaId}", x => new { x.PetId, x.MediaId });
+        Delete("/api/pets/{@pet}/medias/{@mediaId}", x => new { x.PetId, x.MediaId });
     }
 
     public async override Task<Results<NoContent, NotFound, ProblemHttpResult>> ExecuteAsync(DeleteMediaPetRequest req, CancellationToken ct)

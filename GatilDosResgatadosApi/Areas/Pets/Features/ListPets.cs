@@ -23,7 +23,7 @@ public class ListPets(ApplicationDbContext dbContext) : Endpoint<ListPetsRequest
 {
     public override void Configure()
     {
-        Get("/api/pet/list");
+        Get("/api/pets/");
     }
 
     public async override Task<Results<Ok<PaginatedList<PetResponse>>, ProblemHttpResult>> ExecuteAsync(ListPetsRequest req, CancellationToken ct)

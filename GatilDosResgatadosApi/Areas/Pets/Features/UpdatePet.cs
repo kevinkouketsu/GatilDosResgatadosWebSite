@@ -31,7 +31,7 @@ public class UpdatePet(ApplicationDbContext dbContext, ILogger<UpdatePetRequest>
 {
     public override void Configure()
     {
-        Patch("api/pet/");
+        Patch("api/pets/");
         AllowFileUploads();
     }
 

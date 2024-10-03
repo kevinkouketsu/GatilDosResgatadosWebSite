@@ -13,7 +13,7 @@ public class GetPetMedia(ApplicationDbContext dbContext) : Endpoint<GetPetMediaR
 {
     public override void Configure()
     {
-        Get("/api/pet/{@pet}/medias/{@mediaId}", x => new { x.PetId, x.MediaId });
+        Get("/api/pets/{@pet}/medias/{@mediaId}", x => new { x.PetId, x.MediaId });
     }
 
     public async override Task<Results<Ok<GetPetMediaResponse>, NotFound>> ExecuteAsync(GetPetMediaRequest req, CancellationToken ct)

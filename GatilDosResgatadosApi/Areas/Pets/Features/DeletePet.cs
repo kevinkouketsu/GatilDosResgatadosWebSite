@@ -11,7 +11,7 @@ public class DeletePet(ApplicationDbContext dbContext, ILogger<DeletePet> logger
 {
     public override void Configure()
     {
-        Delete("/api/pet/{id}");
+        Delete("/api/pets/{id}");
     }
 
     public async override Task<Results<NoContent, NotFound, ProblemHttpResult>> ExecuteAsync(DeletePetRequest req, CancellationToken ct)

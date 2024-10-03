@@ -13,7 +13,7 @@ public class ViewPet(ApplicationDbContext dbContext) : Endpoint<ViewPetRequest, 
 {
     public override void Configure()
     {
-        Get("/api/pet/{id}");
+        Get("/api/pets/{id}");
     }
 
     public async override Task<Results<Ok<PetResponse>, NotFound>> ExecuteAsync(ViewPetRequest req, CancellationToken ct)

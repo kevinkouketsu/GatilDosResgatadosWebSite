@@ -28,7 +28,7 @@ public class UploadMediaPet(ApplicationDbContext dbContext, ILogger<UploadMediaP
 {
     public override void Configure()
     {
-        Post("/api/pet/{PetId}/medias/");
+        Post("/api/pets/{PetId}/medias/");
         AllowFileUploads();
     }
 

@@ -37,7 +37,7 @@ public class CreatePet(ApplicationDbContext dbContext, ILogger<CreatePet> logger
 {
     public override void Configure()
     {
-        Post("/api/pet");
+        Post("/api/pets/");
         AllowFileUploads();
     }
 
