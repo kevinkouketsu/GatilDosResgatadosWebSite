@@ -26,6 +26,7 @@
     <Folder Include="Core\Entities\" />
     <Folder Include="Areas\Users\Entities\" />
     <Folder Include="GatilDosResgatadosApi\Infrastructure\" />
+    <Folder Include="GatilDosResgatadosApi\Infrastructure\Data\" />
   </ItemGroup>
 
 </Project>

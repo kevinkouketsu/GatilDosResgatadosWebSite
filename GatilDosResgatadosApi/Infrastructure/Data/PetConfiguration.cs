@@ -19,5 +19,17 @@ public class PetConfiguration : IEntityTypeConfiguration<Pet>
             .HasOne(x => x.CreatedBy)
             .WithMany(x => x.Pets)
             .HasForeignKey(x => x.CreatedById);
+
+        builder.OwnsMany(p => p.Medias, a =>
+        {
+            a.ToTable("PetMedias");
+            a.HasKey(x => x.Id);
+
+            a.Property<string>("OwnerId").IsRequired();
+            a.WithOwner().HasForeignKey("OwnerId");
+
+            a.Property(x => x.Description).HasMaxLength(4096);
+            a.Property(x => x.Data).HasMaxLength(PetMedia.MaxMediaSize);
+        });
     }
 }

@@ -13,6 +13,8 @@ public class Pet : IdentifiableAuditableEntity
     public string? CreatedById { get; set; }
     public byte[]? Avatar { get; set; }
     public virtual ApplicationUser CreatedBy { get; set; } = default!;
+    public List<PetMedia> Medias { get; set; } = default!;
+
     public override string ToString()
     {
         return $"Pet [ID: {Id}, Name: {Name}, Description: {Description}, " +

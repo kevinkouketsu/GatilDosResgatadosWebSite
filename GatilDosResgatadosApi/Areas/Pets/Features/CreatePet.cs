@@ -43,14 +43,7 @@ public class CreatePet(ApplicationDbContext dbContext, ILogger<CreatePet> logger
 
     public async override Task<Results<Created, ProblemHttpResult>> ExecuteAsync(CreatePetRequest req, CancellationToken ct)
     {
-        byte[]? avatar = null;
-        if (req.Avatar.Length > 0)
-        {
-            using var memoryStream = new MemoryStream();
-            await req.Avatar.CopyToAsync(memoryStream, ct);
-            avatar = memoryStream.ToArray();
-        }
-
+        byte[]? avatar = await req.Avatar.GetBytesAsync(ct);
         Pet pet = new()
         {
             Id = Guid.NewGuid().ToString(),

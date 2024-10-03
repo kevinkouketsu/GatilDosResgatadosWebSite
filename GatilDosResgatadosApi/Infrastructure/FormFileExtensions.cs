@@ -6,6 +6,14 @@ public static class FormFileExtensions
 {
     public const int ImageMinimumBytes = 512;
 
+    public static async Task<byte[]> GetBytesAsync(this IFormFile file, CancellationToken ct = default)
+    {
+        using var memoryStream = new MemoryStream();
+        await file.CopyToAsync(memoryStream, ct);
+
+        return memoryStream.ToArray();
+    }
+
     public static bool IsImage(this IFormFile postedFile)
     {
         if (!postedFile.ContentType.Equals("image/jpg", StringComparison.CurrentCultureIgnoreCase) &&
