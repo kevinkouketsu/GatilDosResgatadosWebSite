@@ -1,6 +1,7 @@
 ﻿using FastEndpoints;
 using FluentValidation;
 using GatilDosResgatadosApi.Areas.Pets.Entities;
+using GatilDosResgatadosApi.Infrastructure;
 using GatilDosResgatadosApi.Infrastructure.Data;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
@@ -53,11 +54,7 @@ public class UpdatePet(ApplicationDbContext dbContext, ILogger<UpdatePetRequest>
             pet.Gender = req.Gender;
 
         if (req.Avatar?.Length > 0)
-        {
-            using var memoryStream = new MemoryStream();
-            await req.Avatar.CopyToAsync(memoryStream, ct);
-            pet.Avatar = memoryStream.ToArray();
-        }
+            pet.Avatar = await req.Avatar.GetBytesAsync();
 
         try
         {
