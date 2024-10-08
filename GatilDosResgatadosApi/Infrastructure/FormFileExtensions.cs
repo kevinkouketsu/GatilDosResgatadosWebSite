@@ -6,8 +6,11 @@ public static class FormFileExtensions
 {
     public const int ImageMinimumBytes = 512;
 
-    public static async Task<byte[]> GetBytesAsync(this IFormFile file, CancellationToken ct = default)
+    public static async Task<byte[]> GetBytesAsync(this IFormFile? file, CancellationToken ct = default)
     {
+        if (file == null)
+            return [];
+
         using var memoryStream = new MemoryStream();
         await file.CopyToAsync(memoryStream, ct);
 
