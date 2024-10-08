@@ -24,9 +24,12 @@ public class CreatePetRequestValidator : Validator<CreatePetRequest>
         RuleFor(x => x.Name)
             .NotEmpty().WithMessage("O nome do pet não pode estar vazio");
 
-        RuleFor(x => x.Avatar)
-            .Must(x => x.Length < Pet.MaxAvatarSize).WithMessage("O tamanho máximo para o avatar é de 10mb")
-            .Must(x => x.IsImage()).WithMessage("O avatar deve ser uma imagem válida");
+        When(x => x.Avatar is not null, () =>
+        {
+            RuleFor(x => x.Avatar)
+                .Must(x => x.Length < Pet.MaxAvatarSize).WithMessage("O tamanho máximo para o avatar é de 10mb")
+                .Must(x => x.IsImage()).WithMessage("O avatar deve ser uma imagem válida");
+        });
 
         RuleFor(x => x.Gender)
             .IsInEnum().WithMessage("O gênero fornecido não é válido");
