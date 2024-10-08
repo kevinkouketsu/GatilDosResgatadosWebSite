@@ -6,6 +6,7 @@ public record PetMediaInfoResponse(string Id);
 
 public class PetResponse
 {
+    public string Id { get; set; }
     public string Name { get; set; } = default!; 
     public string? Description { get; set; }
     public double? Weight { get; set; }
@@ -15,6 +16,7 @@ public class PetResponse
 
     public static PetResponse Map(Pet pet) => new()
     {
+        Id = pet.Id,
         Avatar = pet.Avatar,
         Gender = pet.Gender,
         Description = pet.Description,
