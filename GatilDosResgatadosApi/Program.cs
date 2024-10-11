@@ -18,6 +18,7 @@ builder.Services
     .ConfigureOptions(builder.Configuration)
     .ConfigureEmailSender(builder.Configuration)
     .AddDatabase(builder.Configuration)
+    .ConfigurePayment(builder.Configuration)
     .ConfigureAuthentication(builder.Configuration)
     .AddAuthorization()
     .Configure<FormOptions>(options => options.MultipartBodyLengthLimit = 10 * 1024 * 1024)

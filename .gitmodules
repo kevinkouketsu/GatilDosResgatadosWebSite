@@ -1,0 +1,4 @@
+[submodule "sdk-dotnet"]
+	path = sdk-dotnet
+	url = git@github.com:kevinkouketsu/sdk-dotnet.git
+	branch = master

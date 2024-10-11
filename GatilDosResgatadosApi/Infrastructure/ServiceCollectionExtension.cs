@@ -7,6 +7,9 @@ using GatilDosResgatadosApi.Core.Abstractions;
 using GatilDosResgatadosApi.Core.Services;
 using FastEndpoints.Security;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using MercadoPago.Config;
+using MercadoPago.Http;
+using GatilDosResgatadosApi.Core.Services.MercadoPago;
 
 namespace GatilDosResgatadosApi.Infrastructure;
 
@@ -45,6 +48,25 @@ public static class ServiceCollectionExtension
     {
         services.AddDbContext<ApplicationDbContext>(c =>
             c.UseNpgsql(configuration.GetConnectionString("DefaultConnection")));
+
+        return services;
+    }
+
+    public static IServiceCollection ConfigurePayment(this IServiceCollection services, IConfiguration configuration)
+    {
+        var accessToken = configuration.GetValue<string>("MercadoPagoOptions:AccessToken");
+        if (accessToken is null)
+        {
+            throw new InvalidOperationException("Missing MercadoPago AccessKey configuration");
+        }
+
+        services.Configure<MercadoPagoOptions>(configuration.GetSection("MercadoPagoOptions"));
+
+        MercadoPagoConfig.AccessToken = accessToken;
+        var retryStrategy = new DefaultRetryStrategy(5);
+        MercadoPagoConfig.RetryStrategy = retryStrategy;
+
+        services.AddTransient<IPaymentGateway, MercadoPagoGateway>();
 
         return services;
     }

@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection.Emit;
 using System.Reflection;
+using GatilDosResgatadosApi.Areas.Subscriptions.Entities;
 
 namespace GatilDosResgatadosApi.Infrastructure.Data;
 
@@ -12,6 +13,7 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
     : IdentityDbContext<ApplicationUser>(options)
 {
     public DbSet<Pet> Pets { get; set; }
+    public DbSet<SubscriptionPlan> Subscriptions { get; set; }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
