@@ -4,6 +4,7 @@ using GatilDosResgatadosApi.Areas.Pets.Entities;
 using GatilDosResgatadosApi.Infrastructure;
 using GatilDosResgatadosApi.Infrastructure.Data;
 using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 
@@ -11,7 +12,8 @@ namespace GatilDosResgatadosApi.Areas.Pets.Features;
 
 public record UpdatePetRequest
 {
-    public string Id { get; set; } = default!;
+    [FromRoute]
+    public string PetId { get; set; } = default!;
     public string? Name { get; set; }
     public double? Weight { get; set; }
     public string? Description { get; set; }
@@ -19,26 +21,17 @@ public record UpdatePetRequest
     public IFormFile? Avatar { get; set; }
 }
 
-public class UpdatePetRequestValidator : Validator<UpdatePetRequest>
-{
-    public UpdatePetRequestValidator()
-    {
-        RuleFor(x => x.Id)
-            .NotEmpty().WithMessage("O código do pet é obrigatório");
-    }
-}
-
 public class UpdatePet(ApplicationDbContext dbContext, ILogger<UpdatePetRequest> logger) : Endpoint<UpdatePetRequest, Results<NoContent, NotFound, ProblemHttpResult>>
 {
     public override void Configure()
     {
-        Patch("api/pets/");
+        Patch("api/pets/{PetId}");
         AllowFileUploads();
     }
 
     public async override Task<Results<NoContent, NotFound, ProblemHttpResult>> ExecuteAsync(UpdatePetRequest req, CancellationToken ct)
     {
-        var pet = await dbContext.Pets.FirstOrDefaultAsync(x => x.Id == req.Id, ct);
+        var pet = await dbContext.Pets.FirstOrDefaultAsync(x => x.Id == req.PetId, ct);
         if (pet is null)
         {
             return TypedResults.NotFound();
@@ -54,7 +47,7 @@ public class UpdatePet(ApplicationDbContext dbContext, ILogger<UpdatePetRequest>
             pet.Gender = req.Gender;
 
         if (req.Avatar?.Length > 0)
-            pet.Avatar = await req.Avatar.GetBytesAsync();
+            pet.Avatar = await req.Avatar.GetBytesAsync(ct);
 
         try
         {
