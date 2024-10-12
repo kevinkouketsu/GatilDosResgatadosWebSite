@@ -69,7 +69,8 @@ public class CreateSubscription(
                 Name = req.Name,
                 Price = req.Price,
                 ExternalReference = preapprovalPlanId,
-                Description = req.Description ?? ""
+                Description = req.Description ?? "",
+                Image = await req.Image.GetBytesAsync(ct)
             };
 
             await dbContext.Subscriptions.AddAsync(preapprovalPlan, ct);
