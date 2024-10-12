@@ -28,6 +28,7 @@ class CreateSubscriptionRequestValidator : Validator<CreateSubscriptionRequest>
             .MaximumLength(4096).WithMessage("O campo Descrição tem um máximo de 4096 caracteres");
 
         RuleFor(x => x.Price)
+            .NotEmpty().WithMessage("O campo Preço é obrigatório.")
             .Must(x => x > 0.0m).WithMessage("O preço deve ser maior que R$ 0.00");
 
         When(x => x.Image is not null, () =>
