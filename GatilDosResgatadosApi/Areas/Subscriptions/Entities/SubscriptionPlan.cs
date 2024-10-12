@@ -8,4 +8,5 @@ public class SubscriptionPlan : IdentifiableAuditableEntity
     public string Description { get; set; } = default!;
     public decimal Price { get; set; } = default!;
     public string ExternalReference { get; set; } = default!;
+    public byte[]? Image { get; set; }
 }

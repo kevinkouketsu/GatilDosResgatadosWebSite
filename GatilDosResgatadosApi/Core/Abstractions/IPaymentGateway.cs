@@ -1,4 +1,6 @@
-﻿namespace GatilDosResgatadosApi.Core.Abstractions;
+﻿using Microsoft.AspNetCore.Http.HttpResults;
+
+namespace GatilDosResgatadosApi.Core.Abstractions;
 
 public enum FrequencyType
 {
@@ -17,4 +19,5 @@ public class PreapprovalRecurring
 public interface IPaymentGateway
 {
     Task<string> CreatePreapprovalPlan(string planName, string backUrl, PreapprovalRecurring recurring);
+    Task UpdatePreapprovalPlan(string planId, string planName, string backUrl, PreapprovalRecurring recurring);
 }
