@@ -55,13 +55,13 @@ public class CreateSubscription(
     {
         try
         {
-            var preapprovalPlanId = await paymentGateway.CreatePreapprovalPlan(req.Name, "https://google.com", new PreapprovalRecurring()
+            var preapprovalPlanId = await paymentGateway.CreatePreapprovalPlanAsync(req.Name, "https://google.com", new PreapprovalRecurring()
             {
                 BillingDay = 5,
                 Frequency = 1,
                 FrequencyType = FrequencyType.Months,
                 TransactionAmount = req.Price
-            });
+            }, ct);
 
             var preapprovalPlan = new SubscriptionPlan() 
             {

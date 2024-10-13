@@ -81,7 +81,7 @@ public class UpdateSubscription(
 
             await dbContext.SaveChangesAsync(ct);
 
-            await paymentGateway.UpdatePreapprovalPlan(subscription.ExternalReference, 
+            await paymentGateway.UpdatePreapprovalPlanAsync(subscription.ExternalReference, 
                 subscription.Name, 
                 "https://google.com", 
                 new PreapprovalRecurring() 
@@ -90,7 +90,8 @@ public class UpdateSubscription(
                     Frequency = 1,
                     FrequencyType = FrequencyType.Months,
                     TransactionAmount = subscription.Price
-                });
+                },
+                ct);
 
             transaction.Complete();
             return TypedResults.NoContent();

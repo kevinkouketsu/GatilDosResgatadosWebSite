@@ -7,7 +7,7 @@ namespace GatilDosResgatadosApi.Core.Services.MercadoPago;
 
 public class MercadoPagoGateway : IPaymentGateway
 {
-    public async Task<string> CreatePreapprovalPlan(string planName, string backUrl, PreapprovalRecurring recurring)
+    public async Task<string> CreatePreapprovalPlanAsync(string planName, string backUrl, PreapprovalRecurring recurring, CancellationToken cancellationToken)
     {
         var client = new PreapprovalPlanClient();
         var preapprovalPlan = await client.CreateAsync(new PreapprovalPlanCreateRequest()
@@ -23,12 +23,12 @@ public class MercadoPagoGateway : IPaymentGateway
                 TransactionAmount = recurring.TransactionAmount,
             },
             BackUrl = backUrl,
-        });
+        }, cancellationToken: cancellationToken);
 
         return preapprovalPlan.Id;
     }
 
-    public async Task UpdatePreapprovalPlan(string planId, string planName, string backUrl, PreapprovalRecurring recurring)
+    public async Task UpdatePreapprovalPlanAsync(string planId, string planName, string backUrl, PreapprovalRecurring recurring, CancellationToken cancellationToken)
     {
         var client = new PreapprovalPlanClient();
 
@@ -45,6 +45,28 @@ public class MercadoPagoGateway : IPaymentGateway
                 TransactionAmount = recurring.TransactionAmount,
             },
             BackUrl = backUrl,
-        }); 
+        }, cancellationToken: cancellationToken);
+    }
+
+    public async Task<PreapprovalPlan> GetPreapprovalPlanAsync(string planId, CancellationToken cancellationToken)
+    {
+        var client = new PreapprovalPlanClient();
+        var subscriptionPlan = await client.GetAsync(planId, cancellationToken: cancellationToken);
+
+        return new PreapprovalPlan()
+        {
+            DateCreated = subscriptionPlan.DateCreated,
+            InitPoint = subscriptionPlan.InitPoint,
+            LastModified = subscriptionPlan.LastModified,
+            Recurring = new PreapprovalRecurring()
+            {
+                BillingDay = subscriptionPlan.AutoRecurring.BillingDay,
+                Frequency = subscriptionPlan.AutoRecurring.Frequency,
+                TransactionAmount = subscriptionPlan.AutoRecurring.TransactionAmount,
+                FrequencyType = subscriptionPlan.AutoRecurring.FrequencyType == "days" ? FrequencyType.Days : FrequencyType.Months,
+            },
+            Status = subscriptionPlan.Status == "active" ? PreapprovalStatus.Active : PreapprovalStatus.Cancelled,
+            Subscribed = subscriptionPlan.Subscribed
+        };
     }
 }
